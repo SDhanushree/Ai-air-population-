@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>AI Air Pollution Risk Predictor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             background: #eef5f9;
             margin: 0;
         }
@@ -15,7 +16,11 @@
             background: #1565c0;
             color: white;
             text-align: center;
-            padding: 15px;
+            padding: 20px;
+        }
+
+        header h1 {
+            margin: 0;
         }
 
         .container {
@@ -24,35 +29,43 @@
             padding: 20px;
         }
 
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
         input, button {
             width: 100%;
             padding: 12px;
             margin-top: 10px;
             font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
 
         button {
             background: #1976d2;
             color: white;
             border: none;
+            cursor: pointer;
         }
 
-        .card {
-            background: white;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 20px;
+        button:hover {
+            background: #0d47a1;
         }
 
-        .low { color: green; }
-        .medium { color: orange; }
-        .high { color: red; }
+        .low { color: green; font-weight: bold; }
+        .medium { color: orange; font-weight: bold; }
+        .high { color: red; font-weight: bold; }
 
         footer {
             text-align: center;
-            padding: 12px;
+            padding: 15px;
             background: #bbdefb;
-            margin-top: 20px;
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -60,73 +73,87 @@
 <body>
 
 <header>
-    🌍 AI Air Pollution Risk Predictor
+    <h1>🌍 AI Air Pollution Risk Predictor</h1>
     <p>Smart Environmental Monitoring System</p>
 </header>
 
 <div class="container">
 
     <div class="card">
-        <h3>Project Description</h3>
+        <h3>📌 Project Description</h3>
         <p>
-            This AI-based system predicts air pollution risk using AQI,
-            temperature, and traffic density values. It provides safety
-            advice based on environmental conditions.
+            This AI-based environmental monitoring system predicts air pollution
+            risk using AQI value, temperature, and traffic density.
+            It provides intelligent safety recommendations based on environmental conditions.
         </p>
     </div>
 
     <div class="card">
-        <h3>Enter Environmental Data</h3>
+        <h3>📝 Enter Environmental Data</h3>
 
-        <input type="number" id="aqi" placeholder="AQI Value">
-        <input type="number" id="temp" placeholder="Temperature (°C)">
-        <input type="number" id="traffic" placeholder="Traffic Density (0-100)">
+        <input type="number" id="aqi" placeholder="Enter AQI Value">
+        <input type="number" id="temp" placeholder="Enter Temperature (°C)">
+        <input type="number" id="traffic" placeholder="Enter Traffic Density (0-100)">
 
         <button onclick="predictRisk()">Predict Pollution Risk</button>
     </div>
 
     <div class="card" id="result" style="display:none;">
-        <h3>Air Quality Analysis</h3>
+        <h3>📊 Air Quality Analysis</h3>
+
         <p>Risk Level: <span id="riskLevel"></span></p>
+
         <p><b>AI Advice:</b></p>
         <p id="advice"></p>
 
+        <p id="details"></p>
+
         <p>
-            <b>Note:</b> This prediction is based on rule-based AI logic
-            and environmental thresholds.
+            <b>Note:</b> This prediction is based on rule-based AI logic 
+            and environmental threshold analysis.
         </p>
     </div>
 
 </div>
 
 <footer>
-    AI + Environment Project | BCA Mini Project<br>
-    Developed using HTML, CSS, and JavaScript
+    AI + Environment Mini Project | Frontend Only <br>
+    Developed using HTML, CSS & JavaScript
 </footer>
 
 <script>
 function predictRisk() {
 
     let aqi = parseFloat(document.getElementById("aqi").value);
+    let temp = parseFloat(document.getElementById("temp").value);
     let traffic = parseFloat(document.getElementById("traffic").value);
+
+    if (isNaN(aqi) || isNaN(temp) || isNaN(traffic)) {
+        alert("Please enter all values correctly!");
+        return;
+    }
 
     let risk = "";
     let advice = "";
+    let details = "";
     let className = "";
 
     if (aqi > 300 || traffic > 80) {
         risk = "High Risk 🔴";
-        advice = "Severe air pollution detected. Avoid outdoor activities.";
+        advice = "Severe air pollution detected. Avoid outdoor activities and wear protective masks.";
+        details = "High AQI and heavy traffic significantly increase harmful pollutant levels.";
         className = "high";
     }
     else if (aqi > 150 || traffic > 50) {
         risk = "Moderate Risk 🟠";
-        advice = "Air quality is moderate. Limit outdoor exposure.";
+        advice = "Air quality is moderate. Sensitive groups should limit prolonged outdoor exposure.";
+        details = "Pollution levels are elevated. Precaution is recommended.";
         className = "medium";
     }
     else {
         risk = "Low Risk 🟢";
-        advice = "Air quality is good. Safe environment.";
+        advice = "Air quality is good. Safe for normal outdoor activities.";
+        details = "Pollution levels are within acceptable environmental standards.";
         className = "low";
     }
 
@@ -134,6 +161,7 @@ function predictRisk() {
     document.getElementById("riskLevel").innerText = risk;
     document.getElementById("riskLevel").className = className;
     document.getElementById("advice").innerText = advice;
+    document.getElementById("details").innerText = details;
 }
 </script>
 
