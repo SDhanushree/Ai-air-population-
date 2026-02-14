@@ -6,7 +6,7 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial;
             background: #eef5f9;
             margin: 0;
         }
@@ -26,7 +26,7 @@
 
         input, button {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             margin-top: 10px;
             font-size: 16px;
         }
@@ -35,19 +35,13 @@
             background: #1976d2;
             color: white;
             border: none;
-            cursor: pointer;
         }
 
-        button:hover {
-            background: #0d47a1;
-        }
-
-        .result {
-            margin-top: 20px;
+        .card {
             background: white;
             padding: 15px;
-            border-radius: 5px;
-            display: none;
+            border-radius: 6px;
+            margin-top: 20px;
         }
 
         .low { color: green; }
@@ -56,7 +50,7 @@
 
         footer {
             text-align: center;
-            padding: 10px;
+            padding: 12px;
             background: #bbdefb;
             margin-top: 20px;
         }
@@ -72,30 +66,48 @@
 
 <div class="container">
 
-    <input type="number" id="aqi" placeholder="AQI Value">
-    <input type="number" id="temp" placeholder="Temperature (°C)">
-    <input type="number" id="traffic" placeholder="Traffic Density (0-100)">
+    <div class="card">
+        <h3>Project Description</h3>
+        <p>
+            This AI-based system predicts air pollution risk using AQI,
+            temperature, and traffic density values. It provides safety
+            advice based on environmental conditions.
+        </p>
+    </div>
 
-    <button onclick="predictRisk()">Predict Pollution Risk</button>
+    <div class="card">
+        <h3>Enter Environmental Data</h3>
 
-    <div class="result" id="result">
+        <input type="number" id="aqi" placeholder="AQI Value">
+        <input type="number" id="temp" placeholder="Temperature (°C)">
+        <input type="number" id="traffic" placeholder="Traffic Density (0-100)">
+
+        <button onclick="predictRisk()">Predict Pollution Risk</button>
+    </div>
+
+    <div class="card" id="result" style="display:none;">
         <h3>Air Quality Analysis</h3>
         <p>Risk Level: <span id="riskLevel"></span></p>
         <p><b>AI Advice:</b></p>
         <p id="advice"></p>
+
+        <p>
+            <b>Note:</b> This prediction is based on rule-based AI logic
+            and environmental thresholds.
+        </p>
     </div>
 
 </div>
 
 <footer>
-    AI + Environment Project | Frontend Only
+    AI + Environment Project | BCA Mini Project<br>
+    Developed using HTML, CSS, and JavaScript
 </footer>
 
 <script>
 function predictRisk() {
 
     let aqi = parseFloat(document.getElementById("aqi").value);
-    let temp = parseFloat(document.getElementById("temp").value);
     let traffic = parseFloat(document.getElementById("traffic").value);
 
     let risk = "";
@@ -104,17 +116,17 @@ function predictRisk() {
 
     if (aqi > 300 || traffic > 80) {
         risk = "High Risk 🔴";
-        advice = "Severe air pollution detected. Avoid outdoor activities. Wear mask.";
+        advice = "Severe air pollution detected. Avoid outdoor activities.";
         className = "high";
     }
     else if (aqi > 150 || traffic > 50) {
         risk = "Moderate Risk 🟠";
-        advice = "Air quality is moderate. Sensitive groups should limit outdoor exposure.";
+        advice = "Air quality is moderate. Limit outdoor exposure.";
         className = "medium";
     }
     else {
         risk = "Low Risk 🟢";
-        advice = "Air quality is good. Safe for outdoor activities.";
+        advice = "Air quality is good. Safe environment.";
         className = "low";
     }
 
