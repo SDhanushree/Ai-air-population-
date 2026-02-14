@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Air Pollution Risk Predictor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef5f9;
+            margin: 0;
+        }
+
+        header {
+            background: #1565c0;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #1976d2;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0d47a1;
+        }
+
+        .result {
+            margin-top: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .low { color: green; }
+        .medium { color: orange; }
+        .high { color: red; }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #bbdefb;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    🌍 AI Air Pollution Risk Predictor
+    <p>Smart Environmental Monitoring System</p>
+</header>
+
+<div class="container">
+
+    <input type="number" id="aqi" placeholder="AQI Value">
+    <input type="number" id="temp" placeholder="Temperature (°C)">
+    <input type="number" id="traffic" placeholder="Traffic Density (0-100)">
+
+    <button onclick="predictRisk()">Predict Pollution Risk</button>
+
+    <div class="result" id="result">
+        <h3>Air Quality Analysis</h3>
+        <p>Risk Level: <span id="riskLevel"></span></p>
+        <p><b>AI Advice:</b></p>
+        <p id="advice"></p>
+    </div>
+
+</div>
+
+<footer>
+    AI + Environment Project | Frontend Only
+</footer>
+
+<script>
+function predictRisk() {
+
+    let aqi = parseFloat(document.getElementById("aqi").value);
+    let temp = parseFloat(document.getElementById("temp").value);
+    let traffic = parseFloat(document.getElementById("traffic").value);
+
+    let risk = "";
+    let advice = "";
+    let className = "";
+
+    if (aqi > 300 || traffic > 80) {
+        risk = "High Risk 🔴";
+        advice = "Severe air pollution detected. Avoid outdoor activities. Wear mask.";
+        className = "high";
+    }
+    else if (aqi > 150 || traffic > 50) {
+        risk = "Moderate Risk 🟠";
+        advice = "Air quality is moderate. Sensitive groups should limit outdoor exposure.";
+        className = "medium";
+    }
+    else {
+        risk = "Low Risk 🟢";
+        advice = "Air quality is good. Safe for outdoor activities.";
+        className = "low";
+    }
+
+    document.getElementById("result").style.display = "block";
+    document.getElementById("riskLevel").innerText = risk;
+    document.getElementById("riskLevel").className = className;
+    document.getElementById("advice").innerText = advice;
+}
+</script>
+
+</body>
+</html>
